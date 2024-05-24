@@ -5,15 +5,18 @@
 class Ball
 {
 public:
-    Ball(int x, int y, int radius, int velocityX, int velocityY, SDL_Color color, SDL_Renderer *renderer);
+    Ball(int x, int y, int radius, float velocityX, float velocityY, SDL_Color color, SDL_Renderer *renderer);
     ~Ball();
     void update();
     void render();
+    void setVelocity(float velocityX, float velocityY);
+    float getVelocityX();
+    float getVelocityY();
 
 private:
     int x, y;
     int radius;
-    int velocityX, velocityY;
+    float velocityX, velocityY;
     SDL_Color color;
     SDL_Renderer *renderer;
 };

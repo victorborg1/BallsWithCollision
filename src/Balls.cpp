@@ -2,16 +2,18 @@
 #include "windowdata.h"
 
 // Constructor
-Balls::Balls(int numBalls, SDL_Renderer *renderer) : renderer(renderer)
+Balls::Balls(int numBalls, float vel, SDL_Renderer *renderer) : velocityMultiplier(vel), renderer(renderer)
 {
-    SDL_Color color = {255, 100, 0, 255}; // Red color
+    SDL_Color color = {155, 100, 85, 255}; // Red color
+
     for (int i = 0; i < numBalls; ++i)
     {
-        int x = WIDTH / 2;
-        int y = HEIGHT / 2;
-        int velocityX = (rand() % 50) - 10; // -5 to 5
-        int velocityY = (rand() % 50) - 10; // -5 to 5
-        balls.push_back(new Ball(x, y, 2, velocityX, velocityY, color, renderer));
+        int random_number = rand() % 2 == 0 ? 1 : -1;
+        int x = (rand() % WIDTH + 200) - 200;
+        int y = (rand() % HEIGHT + 200) - 200;
+        float velocityX = (float)(velocityMultiplier * random_number);
+        float velocityY = (float)(velocityMultiplier * random_number);
+        balls.push_back(new Ball(x, y, 15, velocityX, velocityY, color, renderer));
     }
 }
 
@@ -37,5 +39,13 @@ void Balls::render()
     for (Ball *ball : balls)
     {
         ball->render();
+    }
+}
+
+void Balls::setVelocity(float vel)
+{
+    for (Ball *ball : balls)
+    {
+        ball->setVelocity((float)(vel * ball->getVelocityX()), (float)(vel * ball->getVelocityY()));
     }
 }

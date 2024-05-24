@@ -2,7 +2,7 @@
 #include "windowdata.h"
 
 // Constructor
-Ball::Ball(int x, int y, int radius, int velocityX, int velocityY, SDL_Color color, SDL_Renderer *renderer)
+Ball::Ball(int x, int y, int radius, float velocityX, float velocityY, SDL_Color color, SDL_Renderer *renderer)
     : x(x), y(y), radius(radius), velocityX(velocityX), velocityY(velocityY), color(color), renderer(renderer) {}
 
 // Destructor
@@ -13,13 +13,27 @@ void Ball::update()
     x += velocityX;
     y += velocityY;
 
-    if (x - radius < 0 || x + radius > WIDTH)
+    // Check collision with screen boundaries
+    if (x - radius < 0)
     {
-        velocityX = -velocityX;
+        x = radius;
+        velocityX = -velocityX; // Reverse velocity
     }
-    if (y - radius < 0 || y + radius > HEIGHT)
+    else if (x + radius > WIDTH)
     {
-        velocityY = -velocityY;
+        x = WIDTH - radius;
+        velocityX = -velocityX; // Reverse velocity
+    }
+
+    if (y - radius < 0)
+    {
+        y = radius;
+        velocityY = -velocityY; // Reverse velocity
+    }
+    else if (y + radius > HEIGHT)
+    {
+        y = HEIGHT - radius;
+        velocityY = -velocityY; // Reverse velocity
     }
 }
 
@@ -40,5 +54,35 @@ void Ball::render()
                 SDL_RenderDrawPoint(renderer, x + dx, y + dy);
             }
         }
+    }
+}
+
+void Ball::setVelocity(float velX, float velY)
+{
+    velocityX = velX;
+    velocityY = velY;
+}
+
+float Ball::getVelocityX()
+{
+    if (velocityX > 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+float Ball::getVelocityY()
+{
+    if (velocityY > 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
     }
 }
