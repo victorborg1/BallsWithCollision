@@ -10,6 +10,7 @@ public:
     void update();
     void render();
     void setVelocity(float velocityX, float velocityY);
+    void setBallRadius(int r);
     float getVelocityX();
     float getVelocityY();
 

@@ -63,6 +63,11 @@ void Ball::setVelocity(float velX, float velY)
     velocityY = velY;
 }
 
+void Ball::setBallRadius(int r)
+{
+    radius = r;
+}
+
 float Ball::getVelocityX()
 {
     if (velocityX > 0)
